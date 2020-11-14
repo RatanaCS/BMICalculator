@@ -2,6 +2,8 @@ package com.sumuzu.bmicalculator
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.TextUtils
+import android.widget.EditText
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -10,28 +12,23 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        var h = findViewById<EditText>(R.id.etHeight)
+        var w = findViewById<EditText>(R.id.etWeight)
 
         btCalcullate.setOnClickListener {
-            calculate()
+            calculate(h.text.toString(), w.text.toString())
         }
 
 
     }
 
-    public fun calculate(){
-        var heightStr: String = etHeight.text.toString()
-        var weightStr: String= etWeight.text.toString()
+    fun calculate(h :String, w: String){
 
-        tvResult.text = ""
-
-        var height = heightStr.toDouble()
-        var weight = weightStr.toDouble()
-
-        if(etHeight.text.isNullOrEmpty() || etWeight.text.isNullOrEmpty()){
+        if( h.isNullOrEmpty() || w.isNullOrEmpty()){
             Toast.makeText(this@MainActivity, "Mohon untuk diisi Height dan Weight Anda!!", Toast.LENGTH_LONG).show()
         }else {
 
-            var bmi: Double = weight / (height * height * 0.0001)
+            var bmi: Double = w.toInt() / (h.toInt() * h.toInt() * 0.0001)
 
             if (bmi < 18.5) {
                 tvResult.text = "Under Weight / Kurus"
@@ -42,7 +39,8 @@ class MainActivity : AppCompatActivity() {
             } else {
                 tvResult.text = "Obesitas"
             }
-        }
-    }
 
+        }
+
+    }
 }
